@@ -1,0 +1,67 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente WebSocket</title>
+    <style>
+        /* Estilo para las notificaciones */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4caf50;
+            /* Color verde */
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Cliente WebSocket</h1>
+    <button id="sendMessage">Enviar Mensaje</button>
+    <div id="messages"></div>
+    <div id="notification" class="notification"></div>
+
+    <script>
+        const ws = new WebSocket('ws:https://apinode-kiyv.onrender.com:3001');
+
+        ws.onopen = () => {
+            console.log('Conectado al servidor WebSocket');
+        };
+
+        ws.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML += `<p>${message.title}: ${message.body}</p>`;
+            showNotification(message.body); // Llama a la función para mostrar la notificación
+        };
+
+        document.getElementById('sendMessage').onclick = () => {
+            const message = { title: 'Notificación', body: 'Hola desde el cliente WebSocket' };
+            ws.send(JSON.stringify(message));
+        };
+
+        function showNotification(body) {
+            const notification = document.getElementById('notification');
+            notification.textContent = body;
+            notification.style.display = 'block';
+            notification.style.opacity = '1';
+
+            // Ocultar la notificación después de 3 segundos
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 500); // Espera a que la animación termine
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
