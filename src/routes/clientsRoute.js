@@ -20,4 +20,6 @@ router.delete('/:id', clientController.deleteClientById);
 
 router.post('/send-websocket-message', websocketController.sendWebSocketMessage);
 
+router.post('/login', clientController.login);
+
 module.exports = router;

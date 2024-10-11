@@ -27,6 +27,10 @@ exports.sendWebSocketMessage = (req, res) => {
     wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
             client.send(payload);
+
+            server.listen(3001, () => {
+                console.log('Servidor WebSocket escuchando en el puerto 3001');
+            });
         }
     });
 
@@ -34,5 +38,5 @@ exports.sendWebSocketMessage = (req, res) => {
 };
 
 server.listen(3001, () => {
-    console.log('Servidor WebSocket escuchando en el puerto 3000');
+    console.log('Servidor WebSocket escuchando en el puerto 3001');
 });

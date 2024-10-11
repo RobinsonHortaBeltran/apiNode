@@ -6,7 +6,7 @@ const cors = require('cors');
 
 //const db = require('./config/db');
 app.use(cors({
-    origin: 'http://localhost:4200', // Cambia esto si tu frontend está en otro puerto o dominio
+    origin: 'http://localhost:4200,http://localhost:8100', // Cambia esto si tu frontend está en otro puerto o dominio
     methods: ['GET', 'POST'], // Especifica los métodos permitidos
     allowedHeaders: ['Content-Type', 'Authorization'] // Añade otros headers que necesites
 }));
